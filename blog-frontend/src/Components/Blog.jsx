@@ -68,7 +68,9 @@ const navigate = useNavigate();
       <p className="text-gray-600 mt-2">{description}</p>
 
       <div className="mt-3 flex items-center justify-between">
-        <a className="text-blue-600 font-medium text-sm inline-block cursor-pointer hover:text-blue-400">
+        <a onClick={()=>{
+          navigate(`/blog/${id}`)
+        }} className="text-blue-600 font-medium text-sm inline-block cursor-pointer hover:text-blue-400">
           Read Full Article →
         </a>
         <div className="flex gap-4">
