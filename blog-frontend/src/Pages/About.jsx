@@ -13,7 +13,7 @@ export default function About() {
         <h2 className="text-4xl font-bold mt-4 text-gray-800">
           Meet Your Trusted Veterinarian
         </h2>
-        <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+        <p className="text-gray-400 max-w-3xl mx-auto mt-3 text-xl">
           Dedicated to providing exceptional veterinary care with compassion,
           expertise, and the latest medical advances.
         </p>

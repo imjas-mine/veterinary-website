@@ -11,6 +11,7 @@ import Navbar from "./Components/Navbar";
 import Hero from "./Components/Hero";
 import Pricing from "./Pages/Pricing";
 import FAQPage from "./Pages/FAQPage";
+import Appointment from "./Pages/Appointment";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Pricing />
               <FAQPage />
               <Blogs />
+              <Appointment></Appointment>
             </>
           }
         />

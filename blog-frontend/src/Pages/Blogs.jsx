@@ -79,7 +79,7 @@ const Blogs = () => {
             <h2 className="text-3xl font-bold text-gray-900 mt-4">
               Latest from Our Blog
             </h2>
-            <p className="text-gray-500 mt-2">
+            <p className="text-gray-400 max-w-3xl mx-auto mt-3 text-xl">
               Stay informed with expert veterinary advice, pet care tips, and
               the latest insights from Dr. Simran.
             </p>

@@ -11,7 +11,7 @@ export default function FAQPage() {
           <h1 className="text-3xl font-bold mt-3 text-gray-900">
             Get Your Questions Answered
           </h1>
-          <p className="text-gray-500 mt-2 max-w-xl mx-auto">
+          <p className="text-gray-400 max-w-3xl mx-auto mt-3 text-xl">
             Find answers to common questions from pet owners, veterinary
             professionals, and partner clinics.
           </p>

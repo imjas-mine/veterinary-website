@@ -9,11 +9,13 @@ const Services = () => {
     <section id="services" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 text-center">
        
-        <p className="text-blue-500 font-semibold mb-2">Our Services</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <span className="text-xs font-medium text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
+              Our Services
+            </span>
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-4">
           Comprehensive Veterinary Care
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-12">
+        <p className="text-gray-400 max-w-3xl mx-auto mt-3 text-xl mb-6">
           From routine wellness exams to vaccinations and dental care, we provide
           trusted services to keep your pet healthy and happy.
         </p>
