@@ -50,7 +50,6 @@ const AddBlog = () => {
             initialValues={{ }}
             onSubmit={handleSubmit}
             submitText="Add Blog"
-            
             ></BlogForm>
             {error && <div className="text-red-600 text-center">{error}</div>}
             {success && <div className="text-green-600 text-center">{success}</div>}

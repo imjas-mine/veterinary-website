@@ -28,7 +28,8 @@ export default function Navbar() {
           <span>(555) 533- 8833</span>
         </div>
         <button className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition">
-          Book Appointment
+           <a href="#Appointment"> Book Appointment</a>
+          
         </button>
       </div>
 
