@@ -22,7 +22,7 @@ const Blog = ({
   function handleUpdate(id) {
     console.log("navigating to update blog page with id:", id);
     navigate(`/UpdateBlog/${id}`, {
-      state: { id, title, description, category }
+      state: { id, title, description, category ,imageUrl}
     })
 
   }

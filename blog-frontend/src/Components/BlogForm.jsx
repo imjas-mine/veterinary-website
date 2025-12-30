@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false }) => {
+const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false, currentImageUrl = null }) => {
   const [title, setTitle] = useState(initialValues.title || "");
   const [description, setDescription] = useState(initialValues.description || "");
   const [category, setCategory] = useState(initialValues.category || "");
@@ -9,6 +9,7 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false 
   const [selectedFile, setSelectedFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
 
+  console.log("current image url", currentImageUrl)
   useEffect(() => {
     setTitle(initialValues.title || "");
     setDescription(initialValues.description || "");
@@ -29,7 +30,7 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false 
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       if (file.type.startsWith("image/")) {
@@ -65,7 +66,8 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false 
       return;
     }
 
-    if (!selectedFile) {
+    // Only require image if there's no existing image AND no new file selected
+    if (!currentImageUrl && !selectedFile) {
       setError("Please select an image");
       return;
     }
@@ -117,9 +119,8 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false 
       <div>
         <label className="block text-gray-700 font-semibold mb-2">Cover Image</label>
         <div
-          className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors ${
-            dragActive ? "border-indigo-500 bg-indigo-50" : "border-gray-300 hover:border-indigo-400"
-          }`}
+          className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors ${dragActive ? "border-indigo-500 bg-indigo-50" : "border-gray-300 hover:border-indigo-400"
+            }`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
@@ -135,7 +136,16 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false 
           />
           {selectedFile ? (
             <div className="text-gray-700">
-              <span className="font-medium text-indigo-600">Selected:</span> {selectedFile.name}
+              <span className="font-medium text-indigo-600">New image selected:</span> {selectedFile.name}
+            </div>
+          ) : currentImageUrl ? (
+            <div className="flex flex-col items-center gap-2">
+              <img
+                src={`http://localhost:8080/api/s3/download/${currentImageUrl}`}
+                alt="Current"
+                className="w-32 h-24 object-cover rounded"
+              />
+              <p className="text-sm text-gray-500">Current image (click to change)</p>
             </div>
           ) : (
             <>
@@ -145,15 +155,14 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false 
           )}
         </div>
       </div>
-      
+
       <button
         type="submit"
         disabled={isLoading}
-        className={`w-full py-2 rounded-lg transition-colors font-semibold ${
-          isLoading 
-            ? "bg-indigo-400 text-white cursor-not-allowed" 
-            : "bg-indigo-600 text-white hover:bg-indigo-700"
-        }`}
+        className={`w-full py-2 rounded-lg transition-colors font-semibold ${isLoading
+          ? "bg-indigo-400 text-white cursor-not-allowed"
+          : "bg-indigo-600 text-white hover:bg-indigo-700"
+          }`}
       >
         {submitText}
       </button>
