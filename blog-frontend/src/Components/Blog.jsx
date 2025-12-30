@@ -46,7 +46,7 @@ const navigate = useNavigate();
       console.log("error deleting the blog");
     }
   }
-  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+  const formattedDate = new Date(date + "T00:00").toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
