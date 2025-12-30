@@ -6,12 +6,49 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText }) => {
   const [category, setCategory] = useState(initialValues.category || "");
   const [error, setError] = useState("");
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
+
   useEffect(() => {
     setTitle(initialValues.title || "");
     setDescription(initialValues.description || "");
     setCategory(initialValues.category || "");
   }, [initialValues]);
- 
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      if (file.type.startsWith("image/")) {
+        setSelectedFile(file);
+        setError("");
+      } else {
+        setSelectedFile(null);
+        setError("Please select an image file");
+      }
+    }
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -21,7 +58,7 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText }) => {
       return;
     }
 
-    onSubmit({ title, description, category });
+    onSubmit({ title, description, category, file: selectedFile });
   };
 
   return (
@@ -65,6 +102,38 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText }) => {
         </select>
       </div>
 
+      <div>
+        <label className="block text-gray-700 font-semibold mb-2">Cover Image</label>
+        <div
+          className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors ${
+            dragActive ? "border-indigo-500 bg-indigo-50" : "border-gray-300 hover:border-indigo-400"
+          }`}
+          onDragEnter={handleDrag}
+          onDragLeave={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+          onClick={() => document.getElementById("fileInput").click()}
+        >
+          <input
+            id="fileInput"
+            type="file"
+            className="hidden"
+            accept="image/*"
+            onChange={handleChange}
+          />
+          {selectedFile ? (
+            <div className="text-gray-700">
+              <span className="font-medium text-indigo-600">Selected:</span> {selectedFile.name}
+            </div>
+          ) : (
+            <>
+              <p className="text-gray-500 font-medium">Drag & Drop your image here</p>
+              <p className="text-sm text-gray-400 mt-1">or click to browse from device</p>
+            </>
+          )}
+        </div>
+      </div>
+      
       <button
         type="submit"
         className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors font-semibold"

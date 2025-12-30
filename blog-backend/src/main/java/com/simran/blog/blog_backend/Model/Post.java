@@ -18,6 +18,17 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	private String title;
+
+	@Column(columnDefinition = "TEXT")
+	private String description;
+
+	private String category;
+
+	private LocalDate postedOn;
+
+	private String imageUrl;
+
 	public int getId() {
 		return id;
 	}
@@ -26,11 +37,6 @@ public class Post {
 		this.id = id;
 	}
 
-	private String title;
-
-	@Column(columnDefinition = "TEXT")
-	private String description;
-
 	public String getDescription() {
 		return description;
 	}
@@ -38,9 +44,6 @@ public class Post {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	private String category;
-	private LocalDate postedOn;
 
 	public String getTitle() {
 		return title;
@@ -64,6 +67,14 @@ public class Post {
 
 	public void setPostedOn(LocalDate postedOn) {
 		this.postedOn = postedOn;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }
