@@ -55,7 +55,23 @@ const BlogDetail = () => {
             latest insights from Dr. Simran.
           </p>
         </div>
-        <div className="p-8">
+
+        {/* Hero Image */}
+        {blog.imageUrl && (
+          <div className="mb-8">
+            <img
+              src={`http://localhost:8080/api/s3/download/${blog.imageUrl}`}
+              alt={blog.title}
+              className="w-full max-h-[500px] object-cover rounded-xl shadow-lg"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
+        )}
+
+        {/* Blog Content */}
+        <div className="bg-white rounded-xl shadow-md p-8">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-gray-500 text-sm">{blog.postedOn}</span>
             <span className="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
@@ -66,7 +82,7 @@ const BlogDetail = () => {
           <h1 className="text-3xl md:text-4xl font-bold mb-6 font-serif text-gray-800">
             {blog.title}
           </h1>
-          <p className="text-gray-700 text-lg leading-relaxed font-sans">
+          <p className="text-gray-700 text-lg leading-relaxed font-sans whitespace-pre-line">
             {blog.description}
           </p>
         </div>
