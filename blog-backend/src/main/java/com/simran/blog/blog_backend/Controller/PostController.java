@@ -30,35 +30,36 @@ public class PostController {
 
 	@Autowired
 	private PostRepo postRepo;
-	
+
 	@GetMapping()
 	public List<Post> getAllPosts() {
 		return postRepo.findAll();
 	}
-	
+
 	@GetMapping("/{id}")
-	public Post getPostById(@PathVariable Integer id ) {
-		return postRepo.findById(id).orElseThrow(()->new RuntimeException("cannot find the post"));
+	public Post getPostById(@PathVariable Integer id) {
+		return postRepo.findById(id).orElseThrow(() -> new RuntimeException("cannot find the post"));
 	}
-	
+
 	@PostMapping
 	public Post createPost(@RequestBody Post post) {
 		post.setPostedOn(LocalDate.now());
 		return postRepo.save(post);
 	}
+
 	@DeleteMapping("/{id}")
 	public void deletePostById(@PathVariable Integer id) {
 		postRepo.deleteById(id);
 	}
-	
+
 	@PutMapping("/{id}")
-	public Post updatePostById(@PathVariable Integer id,@RequestBody Post updatedPost) {
-		Post existingPost=getPostById(id);
+	public Post updatePostById(@PathVariable Integer id, @RequestBody Post updatedPost) {
+		Post existingPost = getPostById(id);
 		existingPost.setTitle(updatedPost.getTitle());
 		existingPost.setCategory(updatedPost.getCategory());
 		existingPost.setDescription(updatedPost.getDescription());
 		existingPost.setPostedOn(LocalDate.now());
-		
+		existingPost.setImageUrl(updatedPost.getImageUrl());
 		return postRepo.save(existingPost);
 	}
 }

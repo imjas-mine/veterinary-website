@@ -124,6 +124,7 @@ const Blogs = () => {
                     description={post.description}
                     category={post.category}
                     date={post.postedOn}
+                    imageUrl={post.imageUrl}
                     isAuthorized={isAuthorized}
                     onDelete={(id) =>
                       setBlogs((prev) => prev.filter((b) => b.id !== id))

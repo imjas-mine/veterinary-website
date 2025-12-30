@@ -9,21 +9,22 @@ const Blog = ({
   description,
   category,
   date,
+  imageUrl,
   isAuthorized,
   onDelete,
 }) => {
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   function handleClick(id) {
     console.log("navigating to blog detail page with id:", id);
   }
   function handleUpdate(id) {
     console.log("navigating to update blog page with id:", id);
-    navigate(`/UpdateBlog/${id}`,{
-      state:{id,title,description,category}
+    navigate(`/UpdateBlog/${id}`, {
+      state: { id, title, description, category }
     })
-   
+
   }
   async function handleDelete(id) {
     console.log("trying to delete blog with id:", id);
@@ -53,6 +54,17 @@ const navigate = useNavigate();
   });
   return (
     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg hover:shadow-blue-200">
+      {imageUrl && (
+        <img
+          src={`http://localhost:8080/api/s3/download/${imageUrl}`}
+          alt={title}
+          className="w-full h-48 object-cover rounded-lg mb-4"
+          loading="lazy"
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }}
+        />
+      )}
       <div className="flex items-center gap-4 text-sm text-gray-500 mb-3 flex-wrap">
         <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-medium">
           {category}
@@ -68,7 +80,7 @@ const navigate = useNavigate();
       <p className="text-gray-600 mt-2">{description}</p>
 
       <div className="mt-3 flex items-center justify-between">
-        <a onClick={()=>{
+        <a onClick={() => {
           navigate(`/blog/${id}`)
         }} className="text-blue-600 font-medium text-sm inline-block cursor-pointer hover:text-blue-400">
           Read Full Article →

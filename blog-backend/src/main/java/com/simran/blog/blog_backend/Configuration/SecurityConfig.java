@@ -19,30 +19,33 @@ import com.simran.blog.blog_backend.filter.JwtAuthFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
+
 	@Autowired
 	private JwtAuthFilter jwtAuthFilter;
+
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		http.csrf(csrf->csrf.disable()).cors(cors->cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth->auth.requestMatchers("/api/auth/login").permitAll()
-		.requestMatchers(HttpMethod.GET,"/api/posts/**").permitAll()
-		.anyRequest().authenticated()
-		).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-		
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(corsConfigurationSource()))
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/login").permitAll()
+						.requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/api/s3/download/**").permitAll()
+						.anyRequest().authenticated())
+				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
 		return http.build();
 	}
-	
+
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration corsConfiguration=new CorsConfiguration();
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
 		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
 		corsConfiguration.setAllowCredentials(true);
-		
-		UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", corsConfiguration);
 		return source;
-		
+
 	}
 }
