@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const BlogForm = ({ initialValues = {}, onSubmit, submitText }) => {
+const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false }) => {
   const [title, setTitle] = useState(initialValues.title || "");
   const [description, setDescription] = useState(initialValues.description || "");
   const [category, setCategory] = useState(initialValues.category || "");
@@ -45,7 +45,14 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText }) => {
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
+      const file = e.target.files[0];
+      if (file.type.startsWith("image/")) {
+        setSelectedFile(file);
+        setError("");
+      } else {
+        setSelectedFile(null);
+        setError("Please select an image file");
+      }
     }
   };
 
@@ -55,6 +62,11 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText }) => {
 
     if (!title || !description || !category) {
       setError("All fields are required");
+      return;
+    }
+
+    if (!selectedFile) {
+      setError("Please select an image");
       return;
     }
 
@@ -136,7 +148,12 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText }) => {
       
       <button
         type="submit"
-        className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors font-semibold"
+        disabled={isLoading}
+        className={`w-full py-2 rounded-lg transition-colors font-semibold ${
+          isLoading 
+            ? "bg-indigo-400 text-white cursor-not-allowed" 
+            : "bg-indigo-600 text-white hover:bg-indigo-700"
+        }`}
       >
         {submitText}
       </button>

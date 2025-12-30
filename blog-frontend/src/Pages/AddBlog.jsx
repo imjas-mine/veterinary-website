@@ -7,36 +7,70 @@ const AddBlog = () => {
  
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async ({title,description,category}) => {
+  const API_BASE_URL = "http://localhost:8080";
+
+  const handleSubmit = async ({ title, description, category, file }) => {
     setError("");
     setSuccess("");
+    setIsLoading(true);
 
-    const token=localStorage.getItem("token");
-    console.log("the auth token is:"+token);
-    try{
-        const res=await fetch ("http://localhost:8080/api/posts",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-                'Authorization': `Bearer ${token}`,
-            },
-            body:JSON.stringify({title,description,category})
-        });
-        if(res.ok){
+    const token = localStorage.getItem("token");
 
-          console.log("successfully posted the blog");
-          navigate("/");
-        }
-        else{
-          const errMsg=await res.text();
-          console.error(errMsg);
-          setError(errMsg);
-        }
+    if (!token) {
+      setError("You must be logged in to create a blog");
+      setIsLoading(false);
+      return;
     }
-    catch(err){
-        console.log("error posting the blog");
+
+    try {
+      //Upload image to S3
+      const imageKey = `${Date.now()}-${file.name}`;
+      const formData = new FormData();
+      formData.append("key", imageKey);
+      formData.append("file", file);
+
+      const uploadResponse = await fetch(`${API_BASE_URL}/api/s3/upload`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        const errorText = await uploadResponse.text();
+        throw new Error(errorText || "Failed to upload image");
+      }
+
+      console.log("Image uploaded successfully");
+
+      //Create blog post (only if image upload succeeded)
+      const postResponse = await fetch(`${API_BASE_URL}/api/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title, description, category, imageUrl: imageKey }),
+      });
+
+      if (!postResponse.ok) {
+        const errorText = await postResponse.text();
+        throw new Error(errorText || "Failed to create blog post");
+      }
+
+      console.log("Blog created successfully");
+      setSuccess("Blog created successfully!");
+      navigate("/");
+
+    } catch (err) {
+      console.error("Error:", err.message);
+      setError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,7 +83,8 @@ const AddBlog = () => {
             <BlogForm 
             initialValues={{ }}
             onSubmit={handleSubmit}
-            submitText="Add Blog"
+            submitText={isLoading ? "Creating..." : "Add Blog"}
+            isLoading={isLoading}
             ></BlogForm>
             {error && <div className="text-red-600 text-center">{error}</div>}
             {success && <div className="text-green-600 text-center">{success}</div>}
