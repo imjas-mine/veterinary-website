@@ -73,8 +73,8 @@ const Appointment = () => {
             Schedule Your Pet's Visit
           </h1>
           <p className="text-gray-400 mt-2 text-xl">
-            Ready to give your pet the care they deserve? Book an appointment
-            with Dr. Simran today.
+            Consultation about disease, nutrition, sick patient care, or adopting a pet —
+            book an appointment with Dr. Simran today.
           </p>
         </div>
 
@@ -105,30 +105,22 @@ const Appointment = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start">
-                  <MapPinIcon className="h-5 w-5 text-blue-500 mr-3 mt-2" />
-                  <div>
-                    <p className="font-medium">123 Animal Home</p>
-                    <p className="text-sm text-gray-400">
-                      Animal District, CA 90210
-                    </p>
-                  </div>
-                </div>
+
               </div>
             </div>
 
             <div className="bg-gray-50 p-6 rounded-xl shadow-xs">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                Office Hours
+                Consultation Hours
               </h2>
               <ul className="text-gray-600 space-y-1">
                 <li className="flex justify-between">
                   <div className="text-gray-700">Monday - Friday</div>
-                  <div>8:00 AM - 6:00 PM</div>
+                  <div>9:00 AM - 10:00 PM</div>
                 </li>
                 <li className="flex justify-between">
                   <div className="text-gray-700">Saturday</div>
-                  <div>8:00 AM - 6:00 PM</div>
+                  <div>9:00 AM - 6:00 PM</div>
                 </li>
                 <li className="flex justify-between">
                   <div className="text-gray-700">Sunday</div>
@@ -243,7 +235,6 @@ const Appointment = () => {
                 </div>
               </div>
 
-              {/* Row 4: Pet Breed + Pet Age */}
               <div className="flex flex-wrap gap-6">
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
@@ -278,17 +269,36 @@ const Appointment = () => {
                 ></textarea>
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-sm font-semibold cursor-pointer"
-              >
-                Request Appointment
-              </button>
+              <div>
+                <label className="block text-gray-600 text-sm font-medium mb-2">
+                  Select Appointment Type *
+                </label>
+                <div className="flex flex-wrap gap-4">
+                  <button
+                    type="submit"
+                    className="flex-1 min-w-[200px] bg-green-500 hover:bg-green-600 text-white py-3 rounded-sm font-semibold cursor-pointer flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                    Book Voice Call
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 min-w-[200px] bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-sm font-semibold cursor-pointer flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                    </svg>
+                    Book Video Call
+                  </button>
+                </div>
 
-              <p className="text-center text-gray-400 text-sm mt-2">
-                * Required fields. We’ll contact you within 24 hours to confirm
-                your appointment.
-              </p>
+                <p className="text-center text-gray-400 text-sm mt-2">
+                  * Required fields. We’ll contact you within 24 hours to confirm
+                  your appointment.
+                </p>
+              </div>
             </form>
           </div>
         </div>
