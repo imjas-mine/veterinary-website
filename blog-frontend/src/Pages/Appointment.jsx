@@ -1,6 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import { PhoneIcon, EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline";
+
 const Appointment = () => {
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [countryCode, setCountryCode] = useState("+1");
+
+  // Common country codes
+  const countryCodes = [
+    { code: "+1", country: "US/CA" },
+    { code: "+44", country: "UK" },
+    { code: "+91", country: "IN" },
+    { code: "+61", country: "AU" },
+    { code: "+49", country: "DE" },
+    { code: "+33", country: "FR" },
+    { code: "+81", country: "JP" },
+    { code: "+86", country: "CN" },
+    { code: "+55", country: "BR" },
+    { code: "+52", country: "MX" },
+  ];
+
+  // Email validation function
+  const validateEmail = (emailValue) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailValue) {
+      setEmailError("");
+      return;
+    }
+    if (!emailRegex.test(emailValue)) {
+      setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    validateEmail(value);
+  };
+
+  const validatePhone = (phoneValue) => {
+    // Only allow exactly 10 digits
+    const digitsOnly = phoneValue.replace(/\D/g, "");
+    if (!phoneValue) {
+      setPhoneError("");
+      return;
+    }
+    if (digitsOnly.length !== 10) {
+      setPhoneError("Phone number must be exactly 10 digits");
+    } else {
+      setPhoneError("");
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    setPhone(value);
+    validatePhone(value);
+  };
+
   return (
     <section id="Appointment">
       <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
@@ -73,7 +134,7 @@ const Appointment = () => {
                   <div className="text-gray-700">Sunday</div>
                   <div>Emergency Only</div>
                 </li>
-                
+
               </ul>
               <div className="mt-4 bg-orange-50 border border-orange-200 text-orange-500 px-4 py-1.5 border-gray-300rounded-sm text-sm">
                 ⚠ Emergency services available 24/7. Call for urgent situations.
@@ -91,22 +152,10 @@ const Appointment = () => {
                   <input
                     type="text"
                     placeholder="Your full name"
+                    required
                     className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
                   />
                 </div>
-                <div className="flex-1 min-w-[220px]">
-                  <label className="block text-gray-600 text-sm font-medium mb-1">
-                    Pet Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Your Pet's name"
-                    className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-6">
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
                     Email Address *
@@ -114,49 +163,53 @@ const Appointment = () => {
                   <input
                     type="email"
                     placeholder="email@example.com"
-                    className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
+                    value={email}
+                    onChange={handleEmailChange}
+                    className={`w-full border rounded-sm px-4 py-1.5 ${emailError ? "border-red-500" : "border-gray-300"
+                      }`}
+                    required
                   />
+                  {emailError && (
+                    <p className="text-red-500 text-xs mt-1">{emailError}</p>
+                  )}
                 </div>
+              </div>
+
+              {/* Row 2: Phone Number + Preferred Date */}
+              <div className="flex flex-wrap gap-6">
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
                     Phone Number *
                   </label>
-                  <input
-                    type="tel"
-                    placeholder="(xxx) xxx-xxxx"
-                    className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
-                  />
+                  <div className="flex gap-2">
+                    <select
+                      value={countryCode}
+                      onChange={(e) => setCountryCode(e.target.value)}
+                      className="border rounded-sm px-2 py-1.5 border-gray-300 text-gray-600 bg-white"
+                    >
+                      {countryCodes.map((country) => (
+                        <option key={country.code} value={country.code}>
+                          {country.code} ({country.country})
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="tel"
+                      placeholder="(xxx) xxx-xxxx"
+                      value={phone}
+                      onChange={handlePhoneChange}
+                      maxLength={10}
+                      className={`flex-1 border rounded-sm px-4 py-1.5 ${phoneError ? "border-red-500" : "border-gray-300"
+                        }`}
+                      required
+                    />
+                  </div>
+                  {phoneError && (
+                    <p className="text-red-500 text-xs mt-1">{phoneError}</p>
+                  )}
                 </div>
-              </div>
-
-              <div className="flex flex-wrap gap-6">
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
-                    Pet Type *
-                  </label>
-                  <select className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600 ">
-                    <option>Select pet type</option>
-                    <option>Dog</option>
-                    <option>Cat</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div className="flex-1 min-w-[220px]">
-                  <label className="block text-gray-600 text-sm font-medium mb-1">
-                    Service Needed *
-                  </label>
-                  <select className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600 ">
-                    <option>Select service</option>
-                    <option>Check-up</option>
-                    <option>Vaccination</option>
-                    <option>Surgery</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-6">
-                <div className="flex-1 min-w-[220px]">
-                  <label className="block text-gray-600 text-sm font-medium mb-1 ">
                     Preferred Date
                   </label>
                   <input
@@ -164,16 +217,54 @@ const Appointment = () => {
                     className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600"
                   />
                 </div>
+              </div>
+
+              {/* Row 3: Pet Type + Pet Sex */}
+              <div className="flex flex-wrap gap-6">
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
-                    Preferred Time
+                    Pet Type *
                   </label>
                   <select className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600 ">
-                    <option>Select time</option>
-                    <option>Morning</option>
-                    <option>Afternoon</option>
-                    <option>Evening</option>
+                    <option>Dog</option>
+                    <option>Cat</option>
+                    <option>Exotic</option>
+                    required
                   </select>
+                </div>
+                <div className="flex-1 min-w-[220px]">
+                  <label className="block text-gray-600 text-sm font-medium mb-1">
+                    Pet Sex
+                  </label>
+                  <select className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600 ">
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Row 4: Pet Breed + Pet Age */}
+              <div className="flex flex-wrap gap-6">
+                <div className="flex-1 min-w-[220px]">
+                  <label className="block text-gray-600 text-sm font-medium mb-1">
+                    Pet Breed
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Your Pet's breed"
+                    className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
+                  />
+                </div>
+                <div className="flex-1 min-w-[220px]">
+                  <label className="block text-gray-600 text-sm font-medium mb-1">
+                    Pet Age
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Pet Age"
+                    className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
+                    required
+                  />
                 </div>
               </div>
 
