@@ -1,12 +1,19 @@
-import React, { useState } from "react";
-import { PhoneIcon, EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import React, { useState, useRef } from "react";
+import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const Appointment = () => {
+  const formRef = useRef(null);
+
+  // State for fields that need validation
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [countryCode, setCountryCode] = useState("+1");
+
+  // State for form submission
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState({ type: "", text: "" });
 
   // Common country codes
   const countryCodes = [
@@ -27,12 +34,14 @@ const Appointment = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailValue) {
       setEmailError("");
-      return;
+      return false;
     }
     if (!emailRegex.test(emailValue)) {
       setEmailError("Please enter a valid email address");
+      return false;
     } else {
       setEmailError("");
+      return true;
     }
   };
 
@@ -43,16 +52,17 @@ const Appointment = () => {
   };
 
   const validatePhone = (phoneValue) => {
-    // Only allow exactly 10 digits
     const digitsOnly = phoneValue.replace(/\D/g, "");
     if (!phoneValue) {
       setPhoneError("");
-      return;
+      return false;
     }
     if (digitsOnly.length !== 10) {
       setPhoneError("Phone number must be exactly 10 digits");
+      return false;
     } else {
       setPhoneError("");
+      return true;
     }
   };
 
@@ -60,6 +70,72 @@ const Appointment = () => {
     const value = e.target.value;
     setPhone(value);
     validatePhone(value);
+  };
+
+  // Handle form submission
+  const handleSubmit = async (appointmentType) => {
+    // Validate email and phone
+    const isEmailValid = validateEmail(email);
+    const isPhoneValid = validatePhone(phone);
+
+    if (!isEmailValid || !isPhoneValid) {
+      setSubmitMessage({ type: "error", text: "Please enter the valid information before submitting." });
+      return;
+    }
+
+    // Get form data using FormData API
+    const formData = new FormData(formRef.current);
+
+    // Build the request body
+    const requestBody = {
+      ownerName: formData.get("ownerName"),
+      email: email,
+      countryCode: countryCode,
+      phone: phone,
+      preferredDate: formData.get("preferredDate"),
+      petType: formData.get("petType"),
+      petSex: formData.get("petSex"),
+      petBreed: formData.get("petBreed"),
+      petAge: formData.get("petAge"),
+      additionalNotes: formData.get("additionalNotes"),
+      appointmentType: appointmentType
+    };
+
+    // Check required fields
+    if (!requestBody.ownerName || !requestBody.petType || !requestBody.petAge) {
+      setSubmitMessage({ type: "error", text: "Please fill in all required fields." });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitMessage({ type: "", text: "" });
+
+    try {
+      const response = await fetch("http://localhost:8080/api/appointments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (data.success) {
+        setSubmitMessage({ type: "success", text: data.message });
+        // Reset form
+        formRef.current.reset();
+        setEmail("");
+        setPhone("");
+        setCountryCode("+1");
+      } else {
+        setSubmitMessage({ type: "error", text: data.message });
+      }
+    } catch (error) {
+      setSubmitMessage({ type: "error", text: "Failed to connect to server. Please try again later." });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -135,7 +211,7 @@ const Appointment = () => {
           </div>
 
           <div className="flex-[2] bg-gray-50 p-8 rounded-xl shadow-xs">
-            <form className="space-y-6">
+            <form ref={formRef} className="space-y-6">
               <div className="flex flex-wrap gap-6">
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
@@ -143,6 +219,7 @@ const Appointment = () => {
                   </label>
                   <input
                     type="text"
+                    name="ownerName"
                     placeholder="Your full name"
                     required
                     className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
@@ -205,6 +282,7 @@ const Appointment = () => {
                   </label>
                   <input
                     type="date"
+                    name="preferredDate"
                     className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600"
                   />
                 </div>
@@ -215,20 +293,19 @@ const Appointment = () => {
                   <label className="block text-gray-600 text-sm font-medium mb-1">
                     Pet Type *
                   </label>
-                  <select className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600 ">
-                    <option>Dog</option>
-                    <option>Cat</option>
-                    <option>Exotic</option>
-                    required
+                  <select name="petType" className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600" required>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                    <option value="Exotic">Exotic</option>
                   </select>
                 </div>
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
                     Pet Sex
                   </label>
-                  <select className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600 ">
-                    <option>Male</option>
-                    <option>Female</option>
+                  <select name="petSex" className="w-full border rounded-sm px-4 py-1.5 border-gray-300 text-gray-600">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                   </select>
                 </div>
               </div>
@@ -240,6 +317,7 @@ const Appointment = () => {
                   </label>
                   <input
                     type="text"
+                    name="petBreed"
                     placeholder="Your Pet's breed"
                     className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
                   />
@@ -250,6 +328,7 @@ const Appointment = () => {
                   </label>
                   <input
                     type="number"
+                    name="petAge"
                     placeholder="Pet Age"
                     className="w-full border rounded-sm px-4 py-1.5 border-gray-300"
                     required
@@ -262,6 +341,7 @@ const Appointment = () => {
                   Additional Notes
                 </label>
                 <textarea
+                  name="additionalNotes"
                   placeholder="Any additional information about your pet's condition or special requirements..."
                   className="w-full border rounded-sm px-4 py-1.5 border-gray-300 h-24"
                 ></textarea>
@@ -273,27 +353,41 @@ const Appointment = () => {
                 </label>
                 <div className="flex flex-wrap gap-4">
                   <button
-                    type="submit"
-                    className="flex-1 min-w-[200px] bg-green-500 hover:bg-green-600 text-white py-3 rounded-sm font-semibold cursor-pointer flex items-center justify-center gap-2 transition-colors"
+                    type="button"
+                    onClick={() => handleSubmit('voice')}
+                    disabled={isSubmitting}
+                    className="flex-1 min-w-[200px] bg-green-500 hover:bg-green-600 disabled:bg-green-300 text-white py-3 rounded-sm font-semibold cursor-pointer flex items-center justify-center gap-2 transition-colors"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                     </svg>
-                    Book Voice Call
+                    {isSubmitting ? "Sending..." : "Book Voice Call"}
                   </button>
                   <button
-                    type="submit"
-                    className="flex-1 min-w-[200px] bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-sm font-semibold cursor-pointer flex items-center justify-center gap-2 transition-colors"
+                    type="button"
+                    onClick={() => handleSubmit('video')}
+                    disabled={isSubmitting}
+                    className="flex-1 min-w-[200px] bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white py-3 rounded-sm font-semibold cursor-pointer flex items-center justify-center gap-2 transition-colors"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
                     </svg>
-                    Book Video Call
+                    {isSubmitting ? "Sending..." : "Book Video Call"}
                   </button>
                 </div>
 
+                {/* Success/Error Message */}
+                {submitMessage.text && (
+                  <div className={`mt-4 p-3 rounded-sm text-center ${submitMessage.type === "success"
+                      ? "bg-green-50 text-green-700 border border-green-200"
+                      : "bg-red-50 text-red-700 border border-red-200"
+                    }`}>
+                    {submitMessage.text}
+                  </div>
+                )}
+
                 <p className="text-center text-gray-400 text-sm mt-2">
-                  * Required fields. We’ll contact you within 24 hours to confirm
+                  * Required fields. We'll contact you within 24 hours to confirm
                   your appointment.
                 </p>
               </div>
