@@ -1,4 +1,4 @@
-package com.simran.blog.blog_backend.S3;
+package com.simran.blog.blog_backend.Service;
 
 import org.springframework.stereotype.Service;
 
