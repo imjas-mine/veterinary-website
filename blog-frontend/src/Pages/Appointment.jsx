@@ -167,7 +167,6 @@ const Appointment = () => {
                 </div>
               </div>
 
-              {/* Row 2: Phone Number + Preferred Date */}
               <div className="flex flex-wrap gap-6">
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
@@ -211,7 +210,6 @@ const Appointment = () => {
                 </div>
               </div>
 
-              {/* Row 3: Pet Type + Pet Sex */}
               <div className="flex flex-wrap gap-6">
                 <div className="flex-1 min-w-[220px]">
                   <label className="block text-gray-600 text-sm font-medium mb-1">
