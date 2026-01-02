@@ -1,5 +1,6 @@
 // src/components/Hero.jsx
 import { Heart, ShieldCheck, Clock, Star } from "lucide-react";
+import MainImage from "../assets/MainImage.png";
 
 export default function Hero() {
   return (
@@ -7,7 +8,7 @@ export default function Hero() {
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src="src\assets\MainImage.png"
+          src={MainImage}
           alt="Vet background"
           className="w-full h-full object-cover object-top opacity-15"
         />
@@ -57,7 +58,7 @@ export default function Hero() {
               <Clock className="w-5 h-5 text-sky-500" />
               <span className="text-sm font-medium">24/7 Emergency</span>
             </div>
-          
+
           </div>
         </div>
 
@@ -65,7 +66,7 @@ export default function Hero() {
         <div className="relative flex justify-center">
           <div className="bg-white rounded-2xl shadow-xl p-3 max-w-md">
             <img
-              src="src\assets\MainImage.png"
+              src={MainImage}
               alt="Vet with dog"
               className="rounded-xl object-cover w-full h-[350px] sm:h-[350px] lg:h-[480px]"
             />

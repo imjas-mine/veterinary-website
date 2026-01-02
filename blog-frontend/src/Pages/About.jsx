@@ -1,4 +1,5 @@
 import { GraduationCap, Award, Briefcase, MapPin } from "lucide-react";
+import AboutImage from "../assets/image.png";
 
 export default function About() {
   return (
@@ -91,7 +92,7 @@ export default function About() {
 
         <div className="flex-1 flex justify-center">
           <img
-            src="src\assets\image.png"
+            src={AboutImage}
             alt="Dr. Simran"
             className="rounded-xl shadow-lg object-cover w-3/4"
           />
