@@ -7,16 +7,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../config";
 
+const INITIAL_VISIBLE_COUNT = 5;
+
 const Blogs = () => {
   const [Blogs, setBlogs] = useState([]);
   const token = localStorage.getItem("token");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isAuthorized, setisAuthorized] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
 
   const filteredPosts =
     selectedCategory === "All"
       ? Blogs
       : Blogs.filter((blog) => blog.category === selectedCategory);
+
+  const visiblePosts = filteredPosts.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredPosts.length;
+
   const categories = [
     "All",
     "Pet Health",
@@ -25,6 +32,11 @@ const Blogs = () => {
     "Nutrition",
     "Dental Care",
   ];
+
+  // Reset visible count when category changes
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+  }, [selectedCategory]);
 
   useEffect(() => {
     async function getBlogs() {
@@ -70,6 +82,14 @@ const Blogs = () => {
     validateToken();
   }, [token]);
 
+  const handleViewMore = () => {
+    setVisibleCount((prev) => prev + 5);
+  };
+
+  const handleShowLess = () => {
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+  };
+
   return (
     <section id="blog">
       <div className="bg-gray-50 py-12">
@@ -114,11 +134,11 @@ const Blogs = () => {
                   </select>
                 </div>
                 <span className="text-sm text-gray-500">
-                  {filteredPosts.length} articles found
+                  Showing {visiblePosts.length} of {filteredPosts.length} articles
                 </span>
               </div>
               <div className="space-y-6">
-                {filteredPosts.map((post) => (
+                {visiblePosts.map((post) => (
                   <Blog
                     key={post.id}
                     id={post.id}
@@ -133,6 +153,26 @@ const Blogs = () => {
                     }
                   />
                 ))}
+              </div>
+
+              {/* View More / Show Less Buttons */}
+              <div className="flex justify-center gap-4 mt-8">
+                {hasMore && (
+                  <button
+                    onClick={handleViewMore}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 font-medium transition-colors cursor-pointer"
+                  >
+                    View More
+                  </button>
+                )}
+                {visibleCount > INITIAL_VISIBLE_COUNT && (
+                  <button
+                    onClick={handleShowLess}
+                    className="border border-blue-600 text-blue-600 px-6 py-2 rounded-md hover:bg-blue-50 font-medium transition-colors cursor-pointer"
+                  >
+                    Show Less
+                  </button>
+                )}
               </div>
             </div>
 
