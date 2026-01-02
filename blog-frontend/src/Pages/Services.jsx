@@ -8,10 +8,10 @@ const Services = () => {
   return (
     <section id="services" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 text-center">
-       
+
         <span className="text-xs font-medium text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
-              Our Services
-            </span>
+          Our Services
+        </span>
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-4">
           Comprehensive Veterinary Care
         </h2>
@@ -20,7 +20,7 @@ const Services = () => {
           trusted services to keep your pet healthy and happy.
         </p>
 
-        
+
         <div className="flex flex-wrap justify-center gap-8">
           {servicesData.map((service, index) => {
             const Icon = icons[service.icon];
@@ -33,9 +33,12 @@ const Services = () => {
           <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-4">
             Need more information about our services or want to discuss your pet&apos;s specific needs?
           </h3>
-          <button className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+          <a
+            href="#Appointment"
+            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+          >
             Schedule a Consultation
-          </button>
+          </a>
         </div>
       </div>
     </section>
