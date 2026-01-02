@@ -1,38 +1,41 @@
 import { useState } from "react";
-import petOwners from "../data/petOwners.json";
-import veterinarians from "../data/veterinarians.json";
-import clinics from "../data/clinics.json";
-import { Heart, User, Building2 } from "lucide-react"; // icons
+import dogs from "../data/dogs.json";
+import cats from "../data/cats.json";
+import others from "../data/others.json";
+import { Dog, Cat, Rabbit } from "lucide-react";
 import FAQItem from "./FAQItem";
+
 const tabs = [
   {
-    key: "petOwners",
-    label: "Pet Owners",
+    key: "dogs",
+    label: "Dogs",
     description:
-      "Common questions from pet parents about our services, policies, and care recommendations.",
-    icon: <Heart className="w-4 h-4 mr-2" />,
-    data: petOwners,
+      "Common questions about dog health, vaccinations, nutrition, and preventive care.",
+    icon: <Dog className="w-4 h-4 mr-2" />,
+    data: dogs,
   },
   {
-    key: "veterinarians",
-    label: "Veterinarians",
+    key: "cats",
+    label: "Cats",
     description:
-      "Information for fellow veterinarians about consultations, referrals, and professional collaboration.",
-    icon: <User className="w-4 h-4 mr-2" />,
-    data: veterinarians,
+      "Frequently asked questions about feline health, behavior, and wellness.",
+    icon: <Cat className="w-4 h-4 mr-2" />,
+    data: cats,
   },
   {
-    key: "clinics",
-    label: "Clinics",
+    key: "others",
+    label: "Other Pets",
     description:
-      "Partnership opportunities, facility sharing, and collaborative services for other veterinary practices.",
-    icon: <Building2 className="w-4 h-4 mr-2" />,
-    data: clinics,
+      "Care information for rabbits, guinea pigs, birds, reptiles, and other exotic pets.",
+    icon: <Rabbit className="w-4 h-4 mr-2" />,
+    data: others,
   },
 ];
+
 export default function FAQList({ title, data }) {
-  const [activeTab, setActiveTab] = useState("petOwners");
+  const [activeTab, setActiveTab] = useState("dogs");
   const active = tabs.find((t) => t.key === activeTab);
+
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="flex justify-around bg-gray-100 rounded-md p-1 mb-8">
@@ -40,11 +43,10 @@ export default function FAQList({ title, data }) {
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`flex flex-1 items-center cursor-pointer min-w-0 justify-center px-6 py-2 rounded-md text-sm font-medium  transition-colors duration-150 ${
-              activeTab === tab.key
+            className={`flex flex-1 items-center cursor-pointer min-w-0 justify-center px-6 py-2 rounded-md text-sm font-medium transition-colors duration-150 ${activeTab === tab.key
                 ? "bg-white text-gray-900 shadow-sm"
                 : "text-gray-500 hover:text-gray-700"
-            }`}
+              }`}
             aria-pressed={activeTab === tab.key}
           >
             {tab.icon}

@@ -1,0 +1,22 @@
+[
+  {
+    "question": "Do you treat exotic pets like rabbits and guinea pigs?",
+    "answer": "Yes! We provide care for rabbits, guinea pigs, hamsters, ferrets, and other small mammals. These pets have unique dietary and health needs, so it's important to find a vet experienced with exotic species."
+  },
+  {
+    "question": "How often should my rabbit see a vet?",
+    "answer": "Rabbits should have annual wellness exams. They're prone to dental problems, GI stasis, and respiratory infections. Spaying/neutering is also recommended to prevent reproductive cancers and reduce behavioral issues."
+  },
+  {
+    "question": "What should I feed my guinea pig?",
+    "answer": "Guinea pigs require unlimited hay (timothy or orchard grass), fresh vegetables daily (especially vitamin C-rich veggies like bell peppers), and a small amount of pellets. Unlike other rodents, guinea pigs cannot produce their own Vitamin C and need it from their diet."
+  },
+  {
+    "question": "Do birds need regular vet checkups?",
+    "answer": "Yes, birds should see an avian vet annually. Birds hide illness very well, so regular checkups help catch problems early. Watch for signs like fluffed feathers, changes in droppings, decreased appetite, or unusual quietness."
+  },
+  {
+    "question": "Can reptiles get sick?",
+    "answer": "Absolutely. Common reptile health issues include metabolic bone disease (from inadequate UV lighting or calcium), respiratory infections, parasites, and improper shedding. Annual checkups with a reptile-experienced vet are recommended."
+  }
+]

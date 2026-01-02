@@ -1,0 +1,22 @@
+[
+  {
+    "question": "How often should I take my cat to the vet?",
+    "answer": "Healthy adult cats should see a vet annually for wellness exams and vaccinations. Kittens need visits every 3-4 weeks until 16 weeks old. Senior cats (10+ years) should have checkups every 6 months, as they're more prone to kidney disease, diabetes, and hyperthyroidism."
+  },
+  {
+    "question": "What vaccinations does my cat need?",
+    "answer": "Core vaccines for cats include Rabies, Feline Panleukopenia (FVRCP), Calicivirus, and Herpesvirus. Indoor cats have lower risk but still need core vaccines. Outdoor cats may need additional protection like Feline Leukemia (FeLV) vaccine."
+  },
+  {
+    "question": "Why is my cat not using the litter box?",
+    "answer": "Litter box avoidance can indicate urinary tract infections, kidney issues, or stress. It may also be behavioral—cats prefer clean, quiet locations for their boxes. If your cat suddenly stops using the litter box, a vet visit is recommended to rule out medical causes."
+  },
+  {
+    "question": "Is it safe to declaw my cat?",
+    "answer": "We generally advise against declawing as it's an amputation of the last bone of each toe. It can cause chronic pain and behavioral issues. Instead, we recommend regular nail trimming, scratching posts, and nail caps as humane alternatives."
+  },
+  {
+    "question": "How can I tell if my cat is in pain?",
+    "answer": "Cats hide pain well, but signs include hiding more than usual, decreased appetite, reduced grooming, aggression when touched, limping, or changes in litter box habits. Changes in behavior often indicate something is wrong—trust your instincts and consult your vet."
+  }
+]

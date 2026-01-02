@@ -1,0 +1,22 @@
+[
+  {
+    "question": "How often should I take my dog to the vet?",
+    "answer": "Adult dogs should visit the vet at least once a year for a wellness exam and vaccinations. Puppies need more frequent visits (every 3-4 weeks until 16 weeks old), and senior dogs (7+ years) benefit from twice-yearly checkups to catch age-related issues early."
+  },
+  {
+    "question": "What vaccinations does my dog need?",
+    "answer": "Core vaccines for dogs include Rabies, Distemper, Parvovirus, and Adenovirus (DHPP). Depending on your dog's lifestyle, your vet may recommend additional vaccines like Bordetella (kennel cough), Leptospirosis, Lyme disease, and Canine Influenza."
+  },
+  {
+    "question": "How do I know if my dog has fleas or ticks?",
+    "answer": "Signs include excessive scratching, biting at skin, hair loss, red or irritated skin, and visible black specks (flea dirt) in the fur. For ticks, run your hands through your dog's coat regularly to feel for small bumps, especially after outdoor activities."
+  },
+  {
+    "question": "What human foods are dangerous for dogs?",
+    "answer": "Toxic foods for dogs include chocolate, grapes, raisins, onions, garlic, xylitol (artificial sweetener), macadamia nuts, alcohol, and caffeine. If your dog ingests any of these, contact your vet or an emergency animal poison hotline immediately."
+  },
+  {
+    "question": "How can I prevent my dog from getting heartworms?",
+    "answer": "Heartworm prevention is simple with monthly preventative medications (oral or topical) prescribed by your vet. Year-round prevention is recommended, and annual testing ensures your dog remains heartworm-free."
+  }
+]
