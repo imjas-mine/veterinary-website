@@ -255,7 +255,7 @@ const Appointment = () => {
                     <select
                       value={countryCode}
                       onChange={(e) => setCountryCode(e.target.value)}
-                      className="border rounded-sm px-2 py-1.5 border-gray-300 text-gray-600 bg-white"
+                      className="border rounded-sm px-2 py-1.5 border-gray-300 text-gray-600 bg-white flex-shrink-0 w-24 sm:w-auto"
                     >
                       {countryCodes.map((country) => (
                         <option key={country.code} value={country.code}>
@@ -269,7 +269,7 @@ const Appointment = () => {
                       value={phone}
                       onChange={handlePhoneChange}
                       maxLength={10}
-                      className={`flex-1 border rounded-sm px-4 py-1.5 ${phoneError ? "border-red-500" : "border-gray-300"
+                      className={`flex-1 min-w-0 border rounded-sm px-4 py-1.5 ${phoneError ? "border-red-500" : "border-gray-300"
                         }`}
                       required
                     />
