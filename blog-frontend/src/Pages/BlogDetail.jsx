@@ -12,6 +12,7 @@ const BlogDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     async function getBlogById() {
       const res = await fetch(`${API_BASE_URL}/api/posts/${id}`);
       const data = await res.json();
