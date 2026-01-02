@@ -27,6 +27,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(corsConfigurationSource()))
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/login").permitAll()
+						.requestMatchers("/health").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/s3/download/**").permitAll()
 						.requestMatchers("/api/appointments").permitAll()
