@@ -36,12 +36,18 @@ export default function Hero() {
 
           {/* Buttons */}
           <div className="mt-6 flex flex-wrap gap-4">
-            <button className="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-3 rounded-md shadow-md cursor-pointer">
+            <a
+              href="#Appointment"
+              className="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-3 rounded-md shadow-md cursor-pointer"
+            >
               Book Appointment
-            </button>
-            <button className="border border-sky-500 text-sky-500 hover:bg-sky-50 px-6 py-3 rounded-md font-semibold cursor-pointer">
+            </a>
+            <a
+              href="#services"
+              className="border border-sky-500 text-sky-500 hover:bg-sky-50 px-6 py-3 rounded-md font-semibold cursor-pointer"
+            >
               View Services
-            </button>
+            </a>
           </div>
 
           {/* Features row */}
