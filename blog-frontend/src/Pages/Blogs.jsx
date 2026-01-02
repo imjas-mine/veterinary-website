@@ -5,6 +5,8 @@ import HeroImage from "../assets/Hero.png";
 import { Filter } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../config";
+
 const Blogs = () => {
   const [Blogs, setBlogs] = useState([]);
   const token = localStorage.getItem("token");
@@ -27,7 +29,7 @@ const Blogs = () => {
   useEffect(() => {
     async function getBlogs() {
       try {
-        const res = await fetch("http://localhost:8080/api/posts");
+        const res = await fetch(`${API_BASE_URL}/api/posts`);
         const data = await res.json();
         console.log(data);
         setBlogs(data);
@@ -46,7 +48,7 @@ const Blogs = () => {
         return;
       }
       try {
-        const res = await fetch("http://localhost:8080/api/auth/validate", {
+        const res = await fetch(`${API_BASE_URL}/api/auth/validate`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -141,11 +143,10 @@ const Blogs = () => {
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`block w-full text-left px-3 py-2 rounded-md text-sm ${
-                      selectedCategory === cat
-                        ? "bg-blue-500 text-white"
-                        : "text-gray-700 hover:bg-gray-100"
-                    }`}
+                    className={`block w-full text-left px-3 py-2 rounded-md text-sm ${selectedCategory === cat
+                      ? "bg-blue-500 text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                      }`}
                   >
                     {cat}
                   </button>

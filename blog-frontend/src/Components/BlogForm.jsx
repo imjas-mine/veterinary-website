@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { API_BASE_URL } from "../config";
 
 const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false, currentImageUrl = null }) => {
   const [title, setTitle] = useState(initialValues.title || "");
@@ -141,7 +142,7 @@ const BlogForm = ({ initialValues = {}, onSubmit, submitText, isLoading = false,
           ) : currentImageUrl ? (
             <div className="flex flex-col items-center gap-2">
               <img
-                src={`http://localhost:8080/api/s3/download/${currentImageUrl}`}
+                src={`${API_BASE_URL}/api/s3/download/${currentImageUrl}`}
                 alt="Current"
                 className="w-32 h-24 object-cover rounded"
               />

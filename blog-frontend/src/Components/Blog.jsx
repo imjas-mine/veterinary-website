@@ -1,7 +1,7 @@
 import React, { use } from "react";
 import { Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE_URL } from "../config";
 
 const Blog = ({
   id,
@@ -22,7 +22,7 @@ const Blog = ({
   function handleUpdate(id) {
     console.log("navigating to update blog page with id:", id);
     navigate(`/UpdateBlog/${id}`, {
-      state: { id, title, description, category ,imageUrl}
+      state: { id, title, description, category, imageUrl }
     })
 
   }
@@ -30,7 +30,7 @@ const Blog = ({
     console.log("trying to delete blog with id:", id);
 
     try {
-      const res = await fetch(`http://localhost:8080/api/posts/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/posts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -58,7 +58,7 @@ const Blog = ({
       {imageUrl && (
         <div className="flex-shrink-0 w-full md:w-48 lg:w-56">
           <img
-            src={`http://localhost:8080/api/s3/download/${imageUrl}`}
+            src={`${API_BASE_URL}/api/s3/download/${imageUrl}`}
             alt={title}
             className="w-full h-40 md:h-full object-cover rounded-lg"
             loading="lazy"

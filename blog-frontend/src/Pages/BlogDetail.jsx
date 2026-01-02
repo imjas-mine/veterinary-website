@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import HeroImage from "../assets/Hero.png";
+import { API_BASE_URL } from "../config";
+
 
 const BlogDetail = () => {
   let param = useParams();
@@ -12,7 +14,7 @@ const BlogDetail = () => {
   console.log(id);
   useEffect(() => {
     async function getBlogById() {
-      const res = await fetch(`http://localhost:8080/api/posts/${id}`);
+      const res = await fetch(`${API_BASE_URL}/api/posts/${id}`);
       const data = await res.json();
       setBlog(data);
       setLoading(false);
@@ -60,7 +62,7 @@ const BlogDetail = () => {
         {blog.imageUrl && (
           <div className="mb-8">
             <img
-              src={`http://localhost:8080/api/s3/download/${blog.imageUrl}`}
+              src={`${API_BASE_URL}/api/s3/download/${blog.imageUrl}`}
               alt={blog.title}
               className="w-full max-h-[500px] object-cover rounded-xl shadow-lg"
               onError={(e) => {

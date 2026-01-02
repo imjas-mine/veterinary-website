@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
+import { API_BASE_URL } from "../config";
+
 
 const Appointment = () => {
   const formRef = useRef(null);
@@ -111,7 +113,7 @@ const Appointment = () => {
     setSubmitMessage({ type: "", text: "" });
 
     try {
-      const response = await fetch("http://localhost:8080/api/appointments", {
+      const response = await fetch(`${API_BASE_URL}/api/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -379,8 +381,8 @@ const Appointment = () => {
                 {/* Success/Error Message */}
                 {submitMessage.text && (
                   <div className={`mt-4 p-3 rounded-sm text-center ${submitMessage.type === "success"
-                      ? "bg-green-50 text-green-700 border border-green-200"
-                      : "bg-red-50 text-red-700 border border-red-200"
+                    ? "bg-green-50 text-green-700 border border-green-200"
+                    : "bg-red-50 text-red-700 border border-red-200"
                     }`}>
                     {submitMessage.text}
                   </div>

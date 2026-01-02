@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../Components/Navbar'
 import { useLocation, useNavigate } from 'react-router-dom'
 import BlogForm from '../Components/BlogForm';
+import { API_BASE_URL } from '../config';
 
 const UpdateBlog = () => {
   const { state } = useLocation();
@@ -10,7 +11,7 @@ const UpdateBlog = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const API_BASE_URL = "http://localhost:8080";
+
 
   const handleSubmit = async ({ title, description, category, file }) => {
     setError("");
